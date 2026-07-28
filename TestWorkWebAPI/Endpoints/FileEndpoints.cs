@@ -45,15 +45,15 @@ public class UploadDto
 public static class FileEndpoints
 {
     public static async Task<IResult> FirstMethod(
-        [FromForm] UploadDto dto, 
+        [FromForm] UploadDto dto,
         [FromServices] DataContext context)
     {
         var file = dto.File;
         if (file == null || file.Length == 0)
-            return Microsoft.AspNetCore.Http.Results.BadRequest("Файл не выбран или пуст.");
+            return BadRequest("Файл не выбран или пуст.");
 
         if (!Path.GetExtension(file.FileName).Equals(".csv", StringComparison.OrdinalIgnoreCase))
-            return Microsoft.AspNetCore.Http.Results.BadRequest("Допустимы только файлы с расширением .csv.");
+            return BadRequest("Допустимы только файлы с расширением .csv.");
 
         var lines = new List<string>();
         using (var reader = new StreamReader(file.OpenReadStream()))
@@ -69,21 +69,19 @@ public static class FileEndpoints
         }
 
         if (lines.Count < 1 || lines.Count > 10000)
-            return Microsoft.AspNetCore.Http.Results.BadRequest($"Количество строк ({lines.Count}) должно быть от 1 до 10000.");
-
-        await using var transaction = await context.Database.BeginTransactionAsync();
+            return BadRequest($"Количество строк ({lines.Count}) должно быть от 1 до 10000.");
 
         try
         {
+            // Проверяем существование файла
             var existing = await context.ResultsRecord
                 .FirstOrDefaultAsync(r => r.FileName == file.FileName);
             if (existing != null)
             {
-                context.ResultsRecord.Remove(existing);
-                await context.SaveChangesAsync();
+                context.ResultsRecord.Remove(existing); // удаляем, но не сохраняем
             }
 
-            var parsedValues = new List<DataAccess.Values>();
+            var parsedValues = new List<Values>();
             var dates = new List<DateTime>();
             var execTimes = new List<long>();
             var floatValues = new List<float>();
@@ -93,7 +91,7 @@ public static class FileEndpoints
                 try
                 {
                     var (date, execTime, value) = ParseLineFile(line);
-                    parsedValues.Add(new DataAccess.Values
+                    parsedValues.Add(new Values
                     {
                         Date = date,
                         ExecutionTime = execTime,
@@ -105,7 +103,7 @@ public static class FileEndpoints
                 }
                 catch (ValidationException ex)
                 {
-                    return Microsoft.AspNetCore.Http.Results.BadRequest($"Ошибка в строке: {line}\n{ex.Message}");
+                    return BadRequest($"Ошибка в строке: {line}\n{ex.Message}");
                 }
             }
 
@@ -113,19 +111,20 @@ public static class FileEndpoints
             results.Values = parsedValues;
 
             context.ResultsRecord.Add(results);
+            
+            // Единое сохранение — атомарно для всех изменений
             await context.SaveChangesAsync();
-            await transaction.CommitAsync();
 
-            return Microsoft.AspNetCore.Http.Results.Ok($"Файл '{file.FileName}' успешно обработан.");
+            return Ok($"Файл '{file.FileName}' успешно обработан.");
         }
         catch (Exception)
         {
-            await transaction.RollbackAsync();
+            // Исключение пробрасывается дальше, чтобы middleware обработал как 500
             throw;
         }
     }
 
-    private static (DateTime date, long execTime, float value) ParseLineFile(string line)
+    internal static (DateTime date, long execTime, float value) ParseLineFile(string line)
     {
         var parts = line.Split(';');
         if (parts.Length != 3)
@@ -150,7 +149,7 @@ public static class FileEndpoints
         return (date, execTime, value);
     }
 
-    private static DataAccess.Results CalcResults(string fileName, List<DateTime> dates, List<long> execTimes, List<float> values)
+    internal static DataAccess.Results CalcResults(string fileName, List<DateTime> dates, List<long> execTimes, List<float> values)
     {
         var deltaSeconds = (dates.Max() - dates.Min()).TotalSeconds;
         var avgExecTime = execTimes.Average();

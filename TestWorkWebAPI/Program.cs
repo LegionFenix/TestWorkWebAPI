@@ -42,3 +42,4 @@ app.MapGet("api/Values/latest", FileEndpoints.ThirdMethod)
 
 app.Run();
 
+public partial class Program { } // для тестов

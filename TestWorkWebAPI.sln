@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWorkWebAPI", "TestWorkW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{7F120655-48F4-4007-95C0-59B0B1EEAA70}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWorkWebAPI.Tests", "TestWorkWebAPI.Tests\TestWorkWebAPI.Tests.csproj", "{C414A9A3-ADFC-4264-B185-5B885DDD9F42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{7F120655-48F4-4007-95C0-59B0B1EEAA70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F120655-48F4-4007-95C0-59B0B1EEAA70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F120655-48F4-4007-95C0-59B0B1EEAA70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C414A9A3-ADFC-4264-B185-5B885DDD9F42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C414A9A3-ADFC-4264-B185-5B885DDD9F42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C414A9A3-ADFC-4264-B185-5B885DDD9F42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C414A9A3-ADFC-4264-B185-5B885DDD9F42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
