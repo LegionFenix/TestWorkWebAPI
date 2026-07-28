@@ -1,6 +1,6 @@
 ﻿namespace DataAccess;
 
-public class BaseEntity
+public class BaseEntity: IEntity
 {
-    
+    public Guid Id { get; set; }
 }

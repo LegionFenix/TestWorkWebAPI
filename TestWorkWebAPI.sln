@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWorkWebAPI", "TestWorkWebAPI\TestWorkWebAPI.csproj", "{06D89236-A493-4E2C-A12F-24EA6F92CAFA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{7F120655-48F4-4007-95C0-59B0B1EEAA70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{06D89236-A493-4E2C-A12F-24EA6F92CAFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06D89236-A493-4E2C-A12F-24EA6F92CAFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06D89236-A493-4E2C-A12F-24EA6F92CAFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F120655-48F4-4007-95C0-59B0B1EEAA70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F120655-48F4-4007-95C0-59B0B1EEAA70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F120655-48F4-4007-95C0-59B0B1EEAA70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F120655-48F4-4007-95C0-59B0B1EEAA70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

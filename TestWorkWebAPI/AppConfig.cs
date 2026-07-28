@@ -1,6 +1,5 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-
 
 namespace TestWorkWebAPI;
 
@@ -13,8 +12,8 @@ public class AppConfig
         _configuration = configuration;
     }
 
-    public void GetConnectionString()
+    public string GetConnectionString(string name)
     {
-        return _configuration.GetConnectionString("WebApiDataBase");
+        return _configuration.GetConnectionString(name);
     }
 }
