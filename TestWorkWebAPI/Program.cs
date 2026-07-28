@@ -32,7 +32,13 @@ app.MapPost("api/Values/upload", FileEndpoints.FirstMethod)
     .DisableAntiforgery()
     .WithOpenApi();
 
+app.MapGet("api/Results", FileEndpoints.SecondMethod)
+    .DisableAntiforgery()
+    .WithOpenApi();
 
+app.MapGet("api/Values/latest", FileEndpoints.ThirdMethod)
+    .DisableAntiforgery()
+    .WithOpenApi();
 
 app.Run();
 
